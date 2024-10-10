@@ -1,0 +1,30 @@
+package dto;
+
+import java.io.Serializable;
+
+public class book implements Serializable
+{
+	private String bookId;
+	private String name;
+	private int unitPrice;
+	private String author;
+	private String description;
+	private String publisher;
+	private String category;
+	private long unitsInStock;
+	private String releaseDate;
+	private String condition;
+	
+	public book()
+	{
+		super();
+	}
+
+	public book(String bookId, String name, int unitPrice) {
+		super();
+		this.bookId = bookId;
+		this.name = name;
+		this.unitPrice = unitPrice;
+	}
+	
+}
