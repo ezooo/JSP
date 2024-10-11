@@ -45,7 +45,23 @@
 		<p><input type="submit" value="전송"></input></p>
 	</form>
 	
+	<hr></hr>
+	<p><a href="5_1">예제 5-1</a></p>
+	<p><a href="request01_1.jsp">예제 5-1_1</a></p>
 	
+	<form action="5_1_1" method="get">
+		<p><input type="text" name="id" /></p>
+		<p><input type="text" name="name" /></p>
+		<p><input type="submit" value="전송"></input></p>
+	</form>
+	
+	<p><a href="5_2">예제 5-2</a></p>
+	<p><a href="5_3">예제 5-3</a></p>
+	
+	<form action="5_3" method="post">
+
+		<p><input type="submit" value="예제 5-3"></input></p>
+	</form>
 
 </body>
 </html>

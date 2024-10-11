@@ -18,11 +18,9 @@ public class exam04_3 extends HttpServlet
 		RequestDispatcher ds = req.getRequestDispatcher("chapter04/param01.jsp");
 		ds.forward(req, resp);
 	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		
 	}
-
 }

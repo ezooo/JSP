@@ -2,8 +2,8 @@ package dto;
 
 import java.io.Serializable;
 
-public class book implements Serializable
-{
+public class Book implements Serializable
+{	
 	private String bookId;
 	private String name;
 	private int unitPrice;
@@ -15,11 +15,11 @@ public class book implements Serializable
 	private String releaseDate;
 	private String condition;
 	
-	public book()
+	public Book()
 	{
 		super();
 	}
-	public book(String bookId, String name, int unitPrice) {
+	public Book(String bookId, String name, int unitPrice) {
 		super();
 		this.bookId = bookId;
 		this.name = name;
@@ -85,6 +85,5 @@ public class book implements Serializable
 	}
 	public void setCondition(String condition) {
 		this.condition = condition;
-	}
-	
+	}	
 }
