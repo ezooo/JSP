@@ -23,7 +23,5 @@ public class exam05_3 extends HttpServlet
 	{
 		RequestDispatcher ds = req.getRequestDispatcher("chapter05/request03.jsp");
 		ds.forward(req, resp);
-		
 	}
-
 }

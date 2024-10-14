@@ -25,7 +25,6 @@
 	<p><a href="3_9">예제 3-9</a></p>
 	<p><a href="3_10">예제 3-10</a></p>
 	<p><a href="3_11">예제 3-11</a></p>
-	
 	<hr></hr>
 	<p><a href="4_1">예제 4-1</a></p>
 	<p><a href="4_2">예제 4-2</a></p>
@@ -44,7 +43,6 @@
 		<p><input type="text" name="name" /></p>
 		<p><input type="submit" value="전송"></input></p>
 	</form>
-	
 	<hr></hr>
 	<p><a href="5_1">예제 5-1</a></p>
 	<p><a href="request01_1.jsp">예제 5-1_1</a></p>
@@ -56,12 +54,12 @@
 	</form>
 	
 	<p><a href="5_2">예제 5-2</a></p>
-	<p><a href="5_3">예제 5-3</a></p>
+	<p><a href="5_3">예제 5-3</a></p> 
+	<p><a href="5_4">예제 5-4</a></p>
+	<p><a href="5_5">예제 5-5</a></p>
+	<hr></hr>
+	<p><a href="6_1">예제 6-1</a></p>
 	
-	<form action="5_3" method="post">
-
-		<p><input type="submit" value="예제 5-3"></input></p>
-	</form>
 
 </body>
 </html>

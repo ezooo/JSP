@@ -28,6 +28,7 @@
 			for(int i=0; i<listOfBooks.size(); i++)
 					{
 						Book book = listOfBooks.get(i);
+						
 					//이 for구조 뷰에서 아주아주아주 중요함
 			%>
 			<div class="col-md-4">
@@ -35,8 +36,10 @@
 					<h5><b> <%=book.getName()%></b></h5>
 					<p> <%=book.getAuthor()%></p>
 					<br> <%=book.getPublisher()%> | <%=book.getUnitPrice()%>원
-					<p> 37<%= book.getDescription().substring(0,45) %>...</p>
+					<p> <%= book.getDescription() %></p>
 					<p> <%=book.getReleaseDate()%> </p>
+					<p> <%=book.getUnitPrice()%> </p>
+					<p> <a href="book?id=<%= book.getBookId() %>" class="btn btn-secondary" role="button">상세 정보 &raquo;</a> </p>
 				</div>
 			</div>
 			<%

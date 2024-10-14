@@ -42,4 +42,21 @@ public class bookRepository
 	{
 		return listOfBooks;
 	}
+	
+	public Book getBookById(String bookId)
+	{
+		Book bookById = null;
+		
+		for(int i=0; i<listOfBooks.size(); i++)
+		{
+			Book book = listOfBooks.get(i);
+			if(book != null && book.getBookId()!=null && book.getBookId().equals(bookId))  //arrayList는 객체를 담음 그러니까 book. 해서 함수쓰는거
+			{
+				bookById = book;
+				break;
+			}
+		}
+		
+		return bookById;
+	}
 }

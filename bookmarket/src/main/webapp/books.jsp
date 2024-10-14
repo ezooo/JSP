@@ -36,8 +36,9 @@
 					<h5><b> <%=book.getName()%></b></h5>
 					<p> <%=book.getAuthor()%></p>
 					<br> <%=book.getPublisher()%> | 35<%=book.getUnitPrice()%>원
-					<p> 37<%= book.getDescription().substring(0,20) %>...</p>
+					<p> 37<%= book.getDescription() %></p>
 					<p> <%=book.getUnitPrice()%>원 </p>
+					<p> <a href="./book.jsp?id=<%= book.getBookId() %>" class></a> </p>
 				</div>
 			</div>
 			<%
