@@ -9,9 +9,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
+<link rel="stylesheet" href="./resource/css/bootstrap.min.css"></link>
 <meta charset="UTF-8">
-<title>도서 정보</title>
+<title>도서 상세 정보</title>
 </head>
 <body>
 	<div class="container py-4">
@@ -27,11 +28,15 @@
 			String id = request.getParameter("id");
 			//Book book = bookDAO.getBookById(id);
 			bookRepository br = (bookRepository)request.getAttribute("br");
+			//bookRepository dao = bookRepository.getInstance();
 			Book book = br.getBookById(id);
 		%>
 		
 		<div class="row aligh-items-md-stretch">
-			<div class="col-md-12">
+			<div class="col-md-5">>
+				<img src="./resource/images/<%=book.getFilename()%>" style="width : 70%" />
+			</div>
+			<div class="col-md-6">
 				<h3><b><%=book.getName() %></b></h3>
 				<p><%=book.getDescription() %> </p>
 				<p> <b>도서코드</b> : <span class="badge text-bg-danger"><%= book.getBookId()%></span></p>

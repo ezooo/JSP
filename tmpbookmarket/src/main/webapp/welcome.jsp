@@ -17,6 +17,7 @@
               		<path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
         		</svg>
         		<span class="fs-4">Home</span>
+        		
 			</a>
 			<a href="products">All products</a>
 			<!-- href 주소에 슬래쉬(/)를 붙이면 '절대경로로 경로를 표시하겠다'는 것 -->

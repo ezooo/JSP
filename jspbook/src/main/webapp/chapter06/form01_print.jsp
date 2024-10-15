@@ -17,6 +17,7 @@
 		String phone3 = request.getParameter("phone3");
 		String usersex = request.getParameter("sex");
 		String[] hobby = request.getParameterValues("hobby");
+		String comment = request.getParameter("comment");
 
 	%>
 	<p> 아 이 디 : <%= userid %> </p>
@@ -35,5 +36,6 @@
 			}
 		%> 
 	</p>
+	<p> 가입인사 : <%= comment %> </p>
 </body>
 </html>

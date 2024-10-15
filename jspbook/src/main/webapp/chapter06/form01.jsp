@@ -30,6 +30,9 @@
 			운동<input type="checkbox" name="hobby" value="운동">
 			영화<input type="checkbox" name="hobby" value="영화">
 		</p>
+		<p>
+			<textarea name="comment" rows="3" cols="30" placeholder="가입 인사 입력"></textarea>
+		</p>
 		<p> <input type="submit" value="가입하기"> 
 			<input type="reset" value="다시 쓰기">
 		</p>

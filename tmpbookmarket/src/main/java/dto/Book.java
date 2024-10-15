@@ -14,6 +14,7 @@ public class Book implements Serializable
 	private long unitsInStock;
 	private String releaseDate;
 	private String condition;
+	private String filename; //변수 생성
 	
 	public Book()
 	{
@@ -85,6 +86,12 @@ public class Book implements Serializable
 	}
 	public void setCondition(String condition) {
 		this.condition = condition;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) { //변수 새로 만들었으니까 get set 함수도 추가
+		this.filename = filename;
 	}
 	
 }

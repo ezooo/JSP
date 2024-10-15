@@ -7,6 +7,11 @@ public class bookRepository
 {
 	//저장소 변수 : 하나만 있어야 함 : 그래야 한 곳에 쌓음
 	private static ArrayList<Book> listOfBooks = new ArrayList<Book>();
+	
+//	public static bookRepository getInstance()
+//	{
+//		return instance; //이거 밑에 있어서 싱글톤이 아니게 됨 하나만 만들 것
+//	}
 
 	private static bookRepository repository = new bookRepository();
 	
@@ -19,6 +24,7 @@ public class bookRepository
 		book1.setCategory("IT모바일");
 		book1.setUnitsInStock(1000);
 		book1.setReleaseDate("2022/10/06");
+		book1.setFilename("ISBN1234");
 		
 		Book book2 = new Book("ISBN1235", "자바마스터", 30000);
 		book2.setAuthor("송미영");
@@ -27,6 +33,7 @@ public class bookRepository
 		book2.setCategory("IT모바일");
 		book2.setUnitsInStock(1000);
 		book2.setReleaseDate("2023/01/02");
+		book2.setFilename("ISBN1235"); //객체 생성시 도서 이미지 설정 같이 하기
 		
 		Book book3 = new Book("ISBN1236", "파이썬 프로그래밍", 30000);
 		book3.setAuthor("최성철");
@@ -35,6 +42,7 @@ public class bookRepository
 		book3.setCategory("IT모바일");
 		book3.setUnitsInStock(1000);
 		book3.setReleaseDate("2023/01/01");
+		book3.setFilename("ISBN1236");
 		
 		listOfBooks.add(book1);
 		listOfBooks.add(book2);
@@ -64,7 +72,11 @@ public class bookRepository
 				break;
 			}
 		}
-		
 		return bookById;
+	}
+	
+	public void addBook(Book book)
+	{
+		listOfBooks.add(book);
 	}
 }

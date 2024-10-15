@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Book" %>
+<%@ page import="dao.bookRepository" %>
 <!-- 저장소객체생성 할 필요 없다 (컨트롤러에서 이미 저장소를 req에 실어보내줬음) -->
 <%
 	ArrayList<Book> listOfBooks =(ArrayList<Book>)request.getAttribute("array"); //get 만났다 --> 변수에 넣기
@@ -8,8 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
 	<!-- 이거 링크 설정 안하니까 페이지 Run 했을 때 구동되지 않음 -->
+<link rel="stylesheet" href="./resource/css/bootstrap.min.css"></link>
 <title>도서 목록</title>
 </head>
 <body>
@@ -22,6 +24,10 @@
 				<p class="col-md-8 fs-4">BookList</p>
 			</div>
 		</div>	
+		<%
+			//bookRepository dao = bookRepository.getRepository();
+			//ArrayList<Book> listOfBooks = dao.getAllBooks(); 위에 이미 연결됨
+		%>
 		
 		<div class="row align-items-md-stretch text-center">
 			<%
@@ -33,6 +39,8 @@
 			%>
 			<div class="col-md-4">
 				<div class="h-100 p-2">
+					<%= book.getFilename()%>
+					<img src="./resource/images/<%=book.getFilename()%>.jpg" style="width : 250; height : 350" />
 					<h5><b> <%=book.getName()%></b></h5>
 					<p> <%=book.getAuthor()%></p>
 					<br> <%=book.getPublisher()%> | <%=book.getUnitPrice()%>원
