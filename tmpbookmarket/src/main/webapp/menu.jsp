@@ -6,5 +6,5 @@
 		</svg>   
         <span class="fs-4">Home</span>
       </a>  
-      <a href="products">All products</a>  
+	   
     </header>

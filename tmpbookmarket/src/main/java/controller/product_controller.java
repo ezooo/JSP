@@ -28,6 +28,7 @@ public class product_controller extends HttpServlet
 		//이동
 			//데이터 실어보낼 때 키,값 이렇게 보내야 함
 		req.setAttribute("array", arr); //set이다 : void : 받을게 없다 : 그래서 앞에 코드가 필요없음
+		//이동할때 데이터 가져가는 방법 : set
 		RequestDispatcher ds = req.getRequestDispatcher("books.jsp");
 		ds.forward(req, resp);	
 	}

@@ -19,8 +19,12 @@
         		<span class="fs-4">Home</span>
         		
 			</a>
-			<a href="products">All products</a>
-			<!-- href 주소에 슬래쉬(/)를 붙이면 '절대경로로 경로를 표시하겠다'는 것 -->
+			<div class="d-flex aling-items-center">
+				<span> &emsp; &emsp; &emsp; &emsp; &emsp;</span>
+				<span><a href="products" class="text-dark text-decoration-none">도서 목록 보기 &emsp;</a></span>
+				<span><a href="add_control" class="text-dark text-decoration-none"> 도서 등록</a></span>
+				<!-- href 주소에 슬래쉬(/)를 붙이면 '절대경로로 경로를 표시하겠다'는 것 -->
+			</div>
 		</header>
 	
 		<%! 
