@@ -4,4 +4,32 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- 보안 적용 그룹 지정 : 어떤 그룹을? -->
+  <security-role>
+  	<role-name>manager</role-name>
+  </security-role>
+  
+  <!-- 누구를? -->
+  <security-constraint>
+  	<!-- 검사 대상 지정 : 어떤 URL을 검사 할 것인지 -->
+  	<web-resource-collection>
+  		<web-resource-name>jspbook</web-resource-name>
+  		<url-pattern>/10_1</url-pattern>
+  		<http-method>GET</http-method>
+  	</web-resource-collection>
+  	<!-- 권한 그룹 지정 : 어느 그룹에게 권한을 줄 것인지 -->
+  	<auth-constraint>
+  		<description></description>
+  		<role-name>manager</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  <!-- 누구인지 검사 방법 지정 -->
+  <login-config> 
+  	<auth-method>FORM</auth-method>
+  	<form-login-config>
+  		<form-login-page>/10_2</form-login-page>
+  		<form-error-page>/10_2</form-error-page>
+  	</form-login-config> 
+  </login-config>
 </web-app>
