@@ -45,9 +45,11 @@
 
   <role rolename="manager"/>
   <role rolename="guest"/>
+  <role rolename="admin"/>
   
-  <user username="admin" password="1234" roles="manager"/>
+  <user username="aaa" password="1234" roles="manager"/>
   <user username="bbb" password="1234" roles="manager,guest"/>
   <user username="ccc" password="1234" roles="guest"/>
+  <user username="admin" password="admin1234" roles="admin"/>
 
 </tomcat-users>

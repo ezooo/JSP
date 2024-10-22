@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dto.Book" %>
 <%@ page import="dao.bookRepository" %>
+<%@ page errorPage="exceptionNoBookId.jsp" %>
 <!-- 객체 생성 할 필요없다 컨트롤러가 해줌
 <jsp:useBean id="bookDAO" class="dao.bookRepository" scope="session"></jsp:useBean>
  -->
@@ -33,7 +34,7 @@
 		%>
 		
 		<div class="row aligh-items-md-stretch">
-			<div class="col-md-5">>
+			<div class="col-md-5">
 				<img src="./resource/images/<%=book.getFilename()%>" style="width : 70%" />
 			</div>
 			<div class="col-md-6">

@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Book" %>
 <%@ page import="dao.bookRepository" %>
+
 <!-- 저장소객체생성 할 필요 없다 (컨트롤러에서 이미 저장소를 req에 실어보내줬음) -->
 <%
 	ArrayList<Book> listOfBooks =(ArrayList<Book>) request.getAttribute("array"); //get 만났다 --> 변수에 넣기

@@ -15,7 +15,8 @@ public class login_success extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		
+		RequestDispatcher ds = req.getRequestDispatcher("chapter10/security03_1.jsp");
+		ds.forward(req, resp);
 	}
 
 	@Override
