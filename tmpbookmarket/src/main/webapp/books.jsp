@@ -5,7 +5,7 @@
 
 <!-- 저장소객체생성 할 필요 없다 (컨트롤러에서 이미 저장소를 req에 실어보내줬음) -->
 <%
-	ArrayList<Book> listOfBooks =(ArrayList<Book>) request.getAttribute("array"); //get 만났다 --> 변수에 넣기
+	ArrayList<Book> listOfBooks =(ArrayList<Book>)request.getAttribute("array"); //get 만났다 --> 변수에 넣기
 %>
 <!DOCTYPE html>
 <html>
@@ -54,10 +54,8 @@
 					//이 for구조 뷰에서 아주아주아주 중요함
 			%>
 			<div class="col-md-4">
-				<div class="h-100 p-2">
-					<%= book.getFilename()%>
-					
-					<img src="./resource/images/<%=book.getFilename()%>" style="width : 250; height : 350" />
+				<div class="h-100 p-2">					
+					<img src="./resource/images/<%=book.getFilename()%>" style="width:250px; height:350px" />
 					<h5><b> <%=book.getName()%></b></h5>
 					<p> <%=book.getAuthor()%></p>
 					<br> <%=book.getPublisher()%> | <%=book.getUnitPrice()%>원

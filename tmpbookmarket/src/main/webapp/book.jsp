@@ -14,6 +14,21 @@
 <link rel="stylesheet" href="./resource/css/bootstrap.min.css"></link>
 <meta charset="UTF-8">
 <title>도서 상세 정보</title>
+<script type="text/javascript">
+	function addToCart()
+	{
+		console.log("함수호출")
+		if(confirm("도서를 장바구니에 추가하시겠습니까?"))
+		{
+			document.addForm.submit();
+			console.log("if동작");
+		}
+		else
+		{
+			document.addForm.reset();
+		}
+	}
+</script>
 </head>
 <body>
 	<div class="container py-4">
@@ -47,8 +62,12 @@
 				<p> <b>분류</b> : <%=book.getCategory() %> </p>
 				<p> <b>재고 수</b> : <%=book.getUnitsInStock() %> </p>
 				<h4><%= book.getUnitPrice() %>원</h4>
-				<p> <a href="#" class="btn btn-info">도서주문 &raquo;</a></p>
-				<a href="products" class="btn btn-secondary">도서목록 &raquo;</a>
+				<p>	<form name="addForm" action="./addCart?id=<%= book.getBookId() %>" method="post">
+					<a href="#" class="btn btn-info" onclick="addToCart()">도서주문 &raquo;</a>
+					<a href="cart" class="btn btn-warning">장바구니 &raquo;</a>
+					<a href="products" class="btn btn-secondary">도서목록 &raquo;</a>
+					</form>
+				</p>
 			</div>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

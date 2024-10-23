@@ -14,13 +14,14 @@ public class Book implements Serializable
 	private long unitsInStock;
 	private String releaseDate;
 	private String condition;
-	private String filename; //변수 생성
+	private String filename; //변수 생성 : 이미지 파일명
+	private int quantity;	//장바구니에 담은 갯수
 	
-	public Book()
+	public Book()	//기본생성자
 	{
 		super();
 	}
-	public Book(String bookId, String name, int unitPrice) {
+	public Book(String bookId, String name, int unitPrice) {	//매개변수있는생성자
 		super();
 		this.bookId = bookId;
 		this.name = name;
@@ -92,6 +93,12 @@ public class Book implements Serializable
 	}
 	public void setFilename(String filename) { //변수 새로 만들었으니까 get set 함수도 추가
 		this.filename = filename;
+	}
+	public int getQuantity() {	
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 }
