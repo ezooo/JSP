@@ -30,7 +30,7 @@ public class addCart extends HttpServlet	//역할? 폼 제출 시 장바구니�
 		if(id==null || id.trim().equals(""))
 		{
 			System.out.println("addcart if진입");
-			resp.sendRedirect("books.jsp"); //books.jsp
+			resp.sendRedirect("products"); //books.jsp
 			return;
 		}
 		//모델

@@ -1,6 +1,8 @@
 package controller;
 
-public class removeCart 
+import jakarta.servlet.http.HttpServlet;
+
+public class removeCart extends HttpServlet
 {
 
 }

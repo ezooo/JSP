@@ -15,8 +15,8 @@ import com.oreilly.servlet.multipart.*;
 import dao.bookRepository;
 import dto.Book;
 
-@WebServlet("/add_control")
-public class add_control extends HttpServlet
+@WebServlet("/addBook")
+public class addBook extends HttpServlet
 {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
