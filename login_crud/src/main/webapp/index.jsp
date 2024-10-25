@@ -3,9 +3,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>index.jsp</title>
 </head>
 <body>
-	<a href="join">회원가입</a>
+	<a href="join">회원가입</a><br>
+	<a href="readall">전체 회원 보기</a>
 </body>
 </html>

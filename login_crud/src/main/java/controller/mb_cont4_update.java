@@ -11,36 +11,43 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/join")
-public class member_controller extends HttpServlet
-{	//목표 : create 데이터를 데이터베이스에 입력하는 것
+@WebServlet("/update")
+public class mb_cont4_update extends HttpServlet 
+{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		RequestDispatcher ds = req.getRequestDispatcher("join.jsp");
+		System.out.println("업데이트 컨트롤 진입");
+		//전처리
+		String id = req.getParameter("id");
+		//모델 이동
+		member_repository mr = member_repository.getInstance();
+		member_dto dto = mr.getOnemember(id);	//받을 때 dto로 받아야 함
+		//뷰 이동
+		req.setAttribute("DTO", dto);
+		RequestDispatcher ds = req.getRequestDispatcher("updateform.jsp");
 		ds.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		System.out.println("create 컨트롤 진입");
-		req.setCharacterEncoding("utf-8");	//한글없어서 안해도 되지만 하는 습관 들이기
+		System.out.println("업데이트 컨트롤 post 함수진입");
+		//전처리
 		String id = req.getParameter("id");
 		String pw = req.getParameter("pw");
 		int age = Integer.parseInt(req.getParameter("age"));
-		
-		//그냥 보내도 되고 묶어서 보내려면 묶음 클래스 만들기 : member_dto 만들고 여기와서 객체 생성
 		member_dto dto = new member_dto();
 		dto.setId(id);
 		dto.setPw(pw);
 		dto.setAge(age);
 		
-		//모델 이동	: 데이터 담당하는 클래스
+		//모델
 		member_repository mr = member_repository.getInstance();
-		mr.member_create(dto);
+		mr.update_member(dto);
 		
-		//뷰 이동
+		//뷰
 		resp.sendRedirect("readall");
+		//보여줄 뷰가 없음
 	}
 }
