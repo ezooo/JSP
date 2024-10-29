@@ -17,6 +17,8 @@
 		<th>아이디</th>
 		<th>비밀번호</th>
 		<th>이름</th>
+		<th></th>
+		<th></th>
 	</tr>
 	<%
 		for(int i=0; i<arr.size(); i++)
@@ -31,6 +33,8 @@
 		<td><%= id %></td>
 		<td><%= pw %></td>
 		<td><%= name %></td>
+		<td><a href="update?id=<%=id%>">수정</a></td>
+		<td><a href="delete?id=<%=id%>">삭제</a></td>
 	</tr>
 	<%
 		}

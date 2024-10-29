@@ -27,7 +27,7 @@
 			 | <a href="?language=en" class="text-dark text-decoration-none">English</a>
 			<a href="logout.jsp" class="btn btn-sm btn-success pull right">logout</a>
 		</div>
-		<form action="add_control" method="post" enctype="multipart/form-data" class="form-horizontal" id="addForm">
+		<form action="addBook" method="post" enctype="multipart/form-data" class="form-horizontal" id="addForm">
 		<!-- 이미지 파일이 섞이게 되면서 멀티파트 사용하도록 바뀜 -->
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="bookId" /></label>

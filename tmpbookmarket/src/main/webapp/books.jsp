@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.*"%>
+<%@page import="com.oreilly.servlet.multipart.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Book" %>
@@ -5,6 +7,7 @@
 
 <!-- 저장소객체생성 할 필요 없다 (컨트롤러에서 이미 저장소를 req에 실어보내줬음) -->
 <%
+
 	ArrayList<Book> listOfBooks =(ArrayList<Book>)request.getAttribute("array"); //get 만났다 --> 변수에 넣기
 %>
 <!DOCTYPE html>
@@ -17,22 +20,7 @@
 </head>
 <body>
 	<div class = "container py-4">
-		<header class="pb-3 mb-4 border-bottom">
-			<a href="./welcome.jsp" class="d-flex aling-items-center text-dark text-decoration-none">
-				<svg  width="32" height="32" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-              		<path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
-              		<path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
-        		</svg>
-        		<span class="fs-4">Home</span>
-        		
-			</a>
-			<div class="d-flex aling-items-center">
-				<span> &emsp; &emsp; &emsp; &emsp; &emsp;</span>
-				<span><a href="products" class="text-dark text-decoration-none">도서 목록 보기 &emsp;</a></span>
-				<span><a href="addBook" class="text-dark text-decoration-none"> 도서 등록</a></span>
-				<!-- href 주소에 슬래쉬(/)를 붙이면 '절대경로로 경로를 표시하겠다'는 것 -->
-			</div>
-		</header>
+		<%@ include file="menu.jsp" %>
 		
 		<div class="p-5 mb-4 bg-body-tertiary rounded-3">
 			<div class="container-fluid py-5">
@@ -41,8 +29,8 @@
 			</div>
 		</div>	
 		<%
-			//bookRepository dao = bookRepository.getRepository();
-			//ArrayList<Book> listOfBooks = dao.getAllBooks(); 위에 이미 연결됨
+			
+			
 		%>
 		
 		<div class="row align-items-md-stretch text-center">
@@ -61,7 +49,7 @@
 					<br> <%=book.getPublisher()%> | <%=book.getUnitPrice()%>원
 					<p> <%= book.getDescription() %></p>
 					<p> <%=book.getReleaseDate()%> </p>
-					<p> <%=book.getUnitPrice()%> </p>
+					<p> <%=book.getCategory()%> | <%=book.getCondition()%> </p>
 					<p> <a href="book?id=<%= book.getBookId() %>" class="btn btn-secondary" role="button">상세 정보 &raquo;</a> </p>
 				</div>
 			</div>

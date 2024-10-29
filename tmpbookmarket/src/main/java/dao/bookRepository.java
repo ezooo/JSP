@@ -1,5 +1,10 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import dto.Book;
 
@@ -15,68 +20,252 @@ public class bookRepository
 
 	private static bookRepository repository = new bookRepository();
 	
-	public bookRepository() //저장소생성자 : 
-	{
-		Book book1 = new Book("ISBN1234", "C# 프로그래밍", 27000);
-		book1.setAuthor("우재남");
-		book1.setDescription("C#을 처음 접하는 독자를 대상으로 일대일 수업처럼 자세히 설명한 책이다. 우어어어ㅓ거거ㅓ우멷ㅎㅎㅇ.ㅁ뎧");
-		book1.setPublisher("한빛아카데미");
-		book1.setCategory("IT모바일");
-		book1.setUnitsInStock(1000);
-		book1.setReleaseDate("2022/10/06");
-		book1.setFilename("ISBN1234.jpg");
-		
-		Book book2 = new Book("ISBN1235", "자바마스터", 30000);
-		book2.setAuthor("송미영");
-		book2.setDescription("자바를 처음 배우는 학생을 위해 자바의 기본 개념과 실습 예제를 그림을 이용하여 쉽게 설명합니다. ㄷ두ㅜ두ㅜㅇ가ㅕㄱ웜도ㅕㅓㅗㅊ");
-		book2.setPublisher("한빛아카데미");
-		book2.setCategory("IT모바일");
-		book2.setUnitsInStock(1000);
-		book2.setReleaseDate("2023/01/02");
-		book2.setFilename("ISBN1235.jpg"); //객체 생성시 도서 이미지 설정 같이 하기
-		
-		Book book3 = new Book("ISBN1236", "파이썬 프로그래밍", 30000);
-		book3.setAuthor("최성철");
-		book3.setDescription("파이썬으로 프로그래밍을 시작하는 입문자가 쉽게 이해할 수 있도록 기본 개념을 상세하게 설명하며, 다양한 예제를 제시합니다. 가가가ㅏ여ㅕㅕㄱ너커커ㅕㅕ거ㅣㅁㄷ");
-		book3.setPublisher("한빛아카데미");
-		book3.setCategory("IT모바일");
-		book3.setUnitsInStock(1000);
-		book3.setReleaseDate("2023/01/01");
-		book3.setFilename("ISBN1236.jpg");
-		
-		listOfBooks.add(book1);
-		listOfBooks.add(book2);
-		listOfBooks.add(book3);
-	}
-	
-	public static ArrayList<Book> getAllBooks()
-	{ //얘는 원래 스태틱 안해도 되지만 위에 것들이 외부에서 접근이 안됨 : 그래서 얘도 스태틱 해줘야 함
-		return listOfBooks;
-	}
-	
 	public static bookRepository getRepository()
 	{
 		return repository;
 	}
 	
+//데이터베이스 연결 함수
+	public Connection dbconn() throws Exception	//커넥션 객체 리턴할 것
+	{
+		System.out.println("데이터베이스 연결함수 진입");
+		//일단 드라이버 연결
+		Class.forName("com.mysql.jdbc.Driver");
+		
+		//커넥션객체 : 데이터베이스와 연결
+		Connection conn =null;
+		String url = "jdbc:mysql://localhost:3306/bookmarketDB";
+		String user = "root";
+		String password = "1234";
+		
+		conn = DriverManager.getConnection(url, user, password);
+		System.out.println("데이터베이스 연결 완료");
+		
+		return conn;
+	}
+	
+	public ArrayList<Book> getAllBooks()
+	{ //db 자료 가져오는 구조로 만들기
+		System.out.println("get all books 진입");
+		ResultSet rs = null;
+		ArrayList<Book> arr = new ArrayList<Book>();
+		try 
+		{
+			//데이터베이스 연결부터
+			Connection conn = dbconn();
+			System.out.println("conn : "+conn);
+			//sql 작성
+			String sql = "select * from book;";
+			System.out.println(sql);
+			//statement 객체
+			PreparedStatement pstmt = null;
+			pstmt = conn.prepareStatement(sql);	//conn이 함수 가지고 있음
+			//함수에  sql 넣었으면 execute하기
+			rs = pstmt.executeQuery();
+			//명령어 실행하고 나면 결과를 받아와야 함 -- resultset
+			//execute결과를 rs에 담아야 함
+			while(rs.next())
+			{	//dto변수이름 = repository변수이름 = database컬럼이름 이렇게 지어주는게 좋음
+				String b_id = rs.getString("b_id");
+				String b_name = rs.getString("b_name");
+				int b_unitPrice = rs.getInt("b_unitPrice");
+				String b_author = rs.getString("b_author");
+				String b_description = rs.getString("b_description");
+				String b_publisher = rs.getString("b_publisher");
+				String b_category = rs.getString("b_category");
+				int b_unitsInStock = rs.getInt("b_unitsInStock");
+				String b_releaseDate = rs.getString("b_releaseDate");
+				String b_condition = rs.getString("b_condition");
+				String b_fileName = rs.getString("b_fileName");
+				
+				//dto로 묶기
+				Book dto = new Book();
+				dto.setBookId(b_id);
+				dto.setName(b_name);
+				dto.setUnitPrice(b_unitPrice);
+				dto.setAuthor(b_author);
+				dto.setDescription(b_description);
+				dto.setPublisher(b_publisher);
+				dto.setCategory(b_category);
+				dto.setUnitsInStock(b_unitsInStock);
+				dto.setReleaseDate(b_releaseDate);
+				dto.setCondition(b_condition);
+				dto.setFilename(b_fileName);
+				//dto를 arraylist에 담기
+				arr.add(dto);
+				
+			}
+			if(rs != null) {rs.close();}
+			if(pstmt != null) {pstmt.close();}
+			if(conn != null) {conn.close();}
+			System.out.println("get all books 실행 완료");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("get all books error");
+		}
+		return arr;
+	}
+	
+	
 	public Book getBookById(String bookId)
 	{
-		Book bookById = null;
+		System.out.println("getbook 함수진입");
 		
-		for(int i=0; i<listOfBooks.size(); i++)
+		PreparedStatement pstmt = null;	
+		//받아올거있음
+		ResultSet rs = null;
+		Book dto = new Book();
+		try 
 		{
-			Book book = listOfBooks.get(i);
-			if(book != null && book.getBookId()!=null && book.getBookId().equals(bookId))  //arrayList는 객체를 담음 그러니까 book. 해서 함수쓰는거
+			Connection conn = dbconn();
+			System.out.println("getbook db연결완료");
+			String sql = "select * from book where b_id=?";
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bookId);
+			
+			rs = pstmt.executeQuery();
+			//rs가 dto..하나인데 dto에 담아야 함
+			if(rs.next())
 			{
-				bookById = book;
-				break;
+				String b_id = rs.getString("b_id");
+				String b_name = rs.getString("b_name");
+				int b_unitPrice = rs.getInt("b_unitPrice");
+				String b_author = rs.getString("b_author");
+				String b_description = rs.getString("b_description");
+				String b_publisher = rs.getString("b_publisher");
+				String b_category = rs.getString("b_category");
+				int b_unitsInStock = rs.getInt("b_unitsInStock");
+				String b_releaseDate = rs.getString("b_releaseDate");
+				String b_condition = rs.getString("b_condition");
+				String b_fileName = rs.getString("b_fileName");
+				
+				//dto로 묶기
+				dto.setBookId(b_id);
+				dto.setName(b_name);
+				dto.setUnitPrice(b_unitPrice);
+				dto.setAuthor(b_author);
+				dto.setDescription(b_description);
+				dto.setPublisher(b_publisher);
+				dto.setCategory(b_category);
+				dto.setUnitsInStock(b_unitsInStock);
+				dto.setReleaseDate(b_releaseDate);
+				dto.setCondition(b_condition);
+				dto.setFilename(b_fileName);
+				
 			}
+			if(rs != null) {rs.close();}
+			if(pstmt != null) {pstmt.close();}
+			if(conn != null) {conn.close();}
+			System.out.println("getbook 완료");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("getbook error");
 		}
-		return bookById;
+		return dto;
 	}
 	
 	public void addBook(Book book)
+	{	//db insert
+		try 
+		{
+			System.out.println("addbook try");
+			Connection conn = dbconn();
+			
+			//이건 set이라서 resultset 필요없음
+			PreparedStatement pstmt = null;
+			String sql = "insert into book values(?,?,?,?,?,?,?,?,?,?,?)";
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, book.getBookId());
+			pstmt.setString(2, book.getName());
+			pstmt.setInt(3, book.getUnitPrice());
+			pstmt.setString(4, book.getAuthor());
+			pstmt.setString(5, book.getDescription());
+			pstmt.setString(6, book.getPublisher());
+			pstmt.setString(7, book.getCategory());
+			pstmt.setLong(8, book.getUnitsInStock());
+			pstmt.setString(9, book.getReleaseDate());
+			pstmt.setString(10, book.getCondition());
+			pstmt.setString(11, book.getFilename());
+			
+			pstmt.executeUpdate();
+			
+			if(pstmt != null) {pstmt.close();}
+			if(conn != null) {conn.close();}
+			System.out.println("addbook 완료");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("addbook error");
+		}
+	}
+
+	public void updateBook(Book book)
 	{
-		listOfBooks.add(book);
+		try 
+		{
+			System.out.println("updatebook try");
+			Connection conn = dbconn();
+			
+			PreparedStatement pstmt = null;
+			String sql = "update book set b_name=?, b_unitPrice=?, b_author=?, b_description=?, b_publisher=?, b_category=?, b_unitsInStock=?, b_releaseDate=?, b_condition=?, b_fileName=? where b_id=?";
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, book.getName());
+			pstmt.setInt(2, book.getUnitPrice());
+			pstmt.setString(3, book.getAuthor());
+			pstmt.setString(4, book.getDescription());
+			pstmt.setString(5, book.getPublisher());
+			pstmt.setString(6, book.getCategory());
+			pstmt.setLong(7, book.getUnitsInStock());
+			pstmt.setString(8, book.getReleaseDate());
+			pstmt.setString(9, book.getCondition());
+			pstmt.setString(10, book.getFilename());
+			pstmt.setString(11, book.getBookId());
+			
+			pstmt.executeUpdate();
+			
+			if(pstmt != null) {pstmt.close();}
+			if(conn != null) {conn.close();}
+			System.out.println("update 완료");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void deleteBook(String bookId)
+	{
+		System.out.println("delBook start");
+		try 
+		{
+			//db conn
+			Connection conn = dbconn();
+			
+			PreparedStatement pstmt = null;
+			//가져올결과없다 - rs안만듦
+			String sql = "delete from book where b_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bookId);
+			pstmt.executeUpdate();
+			
+			if(pstmt != null) {pstmt.close();}
+			if(conn != null) {conn.close();}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("delbook error");
+		}
 	}
 }
