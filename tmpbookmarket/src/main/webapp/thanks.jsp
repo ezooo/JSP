@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문 완료</title>
+<link rel="stylesheet" href="/tmpbookmarket/resource/css/bootstrap.min.css"></link>
 </head>
 <body>
 <%

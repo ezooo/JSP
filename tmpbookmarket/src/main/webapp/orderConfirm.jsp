@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="./resource/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="/tmpbookmarket/resource/css/bootstrap.min.css"></link>
 <title>주문 정보</title>
 </head>
 <body>
@@ -46,7 +46,7 @@
 				<table class="table table-hover">
 					<tr>
 						<th class="text-center">도서</th>
-						<th class="text-center">#</th>
+						<th class="text-center">수량</th>
 						<th class="text-center">가격</th>
 						<th class="text-center">소계</th>
 					</tr>
@@ -81,7 +81,7 @@
 				</table>
 				<a href="shipping?cartId=<%= ship_cartId %>" class="btn btn-secondary" role="button">이 전</a>
 				<a href="thanks" class="btn btn-success" role="button">주문 완료</a>
-				<a href="checkoutCancel" class="btn btn-secondary" role="button">취 소</a>
+				<a href="cancel" class="btn btn-secondary" role="button">취 소</a>
 			</div>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

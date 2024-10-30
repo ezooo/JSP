@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-<!-- 정적 리소스는 절대경로표시를 추천함 -->
 	<link href="/bookmarket_CRUD/resources/css/bootstrap.min.css" rel="stylesheet">
 	<meta charset="UTF-8">
 	<title>Welcome</title>
@@ -33,7 +31,9 @@
 			</div>
 		</div>
 		
-		<jsp:include page="footer.jsp"></jsp:include>
+		<footer class="pt-3 mt-4 text-body-secondary border-top">
+			&copy; BookMarker
+		</footer>
 	</div>
 </body>
 </html>

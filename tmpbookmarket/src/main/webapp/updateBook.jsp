@@ -86,7 +86,7 @@
 			</div>
 			<div class="mb-3 row">
 				<div class="col-sm-5">
-					<b>첨부 파일</b> : <input type="file" name="bookImage" class="form-control" >
+					<b>첨부 이미지</b> : <input type="file" name="bookImage" class="form-control" >
 					<!-- 이미지를 위한 div 추가 -->
 				</div>
 			</div>

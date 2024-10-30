@@ -34,5 +34,4 @@ public class editBook extends HttpServlet
 		// TODO Auto-generated method stub
 		super.doPost(req, resp);
 	}
-
 }

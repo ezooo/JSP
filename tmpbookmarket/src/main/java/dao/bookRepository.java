@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import dto.Book;
 
 public class bookRepository 
@@ -49,16 +53,17 @@ public class bookRepository
 		System.out.println("get all books 진입");
 		ResultSet rs = null;
 		ArrayList<Book> arr = new ArrayList<Book>();
+		Connection conn = null;
+		//statement 객체
+		PreparedStatement pstmt = null;
 		try 
 		{
 			//데이터베이스 연결부터
-			Connection conn = dbconn();
+			conn = dbconn();
 			System.out.println("conn : "+conn);
 			//sql 작성
 			String sql = "select * from book;";
 			System.out.println(sql);
-			//statement 객체
-			PreparedStatement pstmt = null;
 			pstmt = conn.prepareStatement(sql);	//conn이 함수 가지고 있음
 			//함수에  sql 넣었으면 execute하기
 			rs = pstmt.executeQuery();
@@ -93,17 +98,31 @@ public class bookRepository
 				dto.setFilename(b_fileName);
 				//dto를 arraylist에 담기
 				arr.add(dto);
-				
 			}
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(conn != null) {conn.close();}
 			System.out.println("get all books 실행 완료");
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 			System.out.println("get all books error");
+		}
+		finally
+		{
+			if(rs != null) 
+			{
+				try {rs.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(pstmt != null) 
+			{
+				try {pstmt.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(conn != null) 
+			{
+				try {conn.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
 		}
 		return arr;
 	}
@@ -113,13 +132,14 @@ public class bookRepository
 	{
 		System.out.println("getbook 함수진입");
 		
+		Connection conn = null;
 		PreparedStatement pstmt = null;	
 		//받아올거있음
 		ResultSet rs = null;
 		Book dto = new Book();
 		try 
 		{
-			Connection conn = dbconn();
+			conn = dbconn();
 			System.out.println("getbook db연결완료");
 			String sql = "select * from book where b_id=?";
 			System.out.println(sql);
@@ -128,6 +148,18 @@ public class bookRepository
 			
 			rs = pstmt.executeQuery();
 			//rs가 dto..하나인데 dto에 담아야 함
+			
+			/*
+			//파일명은 value로 받아올 수 없으므로 여기서 다시 받아와야 함
+			Request.setCharacterEncoding("utf-8"); //나중에 파라미터에 실어보낼 때 텍스트 안 깨지도록 감싸는 것
+			여기서 리퀘스트 쓰려니까 에러남.... 컨트롤러에서 받아오는 게 나을 듯
+			String realFolder = req.getServletContext().getRealPath("/resource/images");
+			System.out.println("폴더명 : "+realFolder); //프로젝트폴더까지 반환해주는 것 확인
+			int maxSize = 5*1024*1024;  //최대 업로드 될 파일의 크기
+			String encType = "utf-8";
+			MultipartRequest multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+			*/
+			
 			if(rs.next())
 			{
 				String b_id = rs.getString("b_id");
@@ -156,9 +188,6 @@ public class bookRepository
 				dto.setFilename(b_fileName);
 				
 			}
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(conn != null) {conn.close();}
 			System.out.println("getbook 완료");
 		} 
 		catch (Exception e) 
@@ -166,18 +195,37 @@ public class bookRepository
 			e.printStackTrace();
 			System.out.println("getbook error");
 		}
+		finally
+		{
+			if(rs != null) 
+			{
+				try {rs.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(pstmt != null) 
+			{
+				try {pstmt.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(conn != null) 
+			{
+				try {conn.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+		}
 		return dto;
 	}
 	
 	public void addBook(Book book)
 	{	//db insert
+		Connection conn = null;
+		//이건 set이라서 resultset 필요없음
+		PreparedStatement pstmt = null;		//변수는 try 안 싸는게 좋다
 		try 
 		{
 			System.out.println("addbook try");
-			Connection conn = dbconn();
+			conn = dbconn();
 			
-			//이건 set이라서 resultset 필요없음
-			PreparedStatement pstmt = null;
 			String sql = "insert into book values(?,?,?,?,?,?,?,?,?,?,?)";
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
@@ -195,9 +243,7 @@ public class bookRepository
 			pstmt.setString(11, book.getFilename());
 			
 			pstmt.executeUpdate();
-			
-			if(pstmt != null) {pstmt.close();}
-			if(conn != null) {conn.close();}
+
 			System.out.println("addbook 완료");
 		} 
 		catch (Exception e) 
@@ -205,16 +251,30 @@ public class bookRepository
 			e.printStackTrace();
 			System.out.println("addbook error");
 		}
+		finally
+		{
+			if(pstmt != null) 
+			{
+				try {pstmt.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(conn != null) 
+			{
+				try {conn.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+		}
 	}
 
 	public void updateBook(Book book)
 	{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		try 
 		{
 			System.out.println("updatebook try");
-			Connection conn = dbconn();
+			conn = dbconn();
 			
-			PreparedStatement pstmt = null;
 			String sql = "update book set b_name=?, b_unitPrice=?, b_author=?, b_description=?, b_publisher=?, b_category=?, b_unitsInStock=?, b_releaseDate=?, b_condition=?, b_fileName=? where b_id=?";
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
@@ -232,27 +292,38 @@ public class bookRepository
 			pstmt.setString(11, book.getBookId());
 			
 			pstmt.executeUpdate();
-			
-			if(pstmt != null) {pstmt.close();}
-			if(conn != null) {conn.close();}
+
 			System.out.println("update 완료");
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
-		
+		finally
+		{
+			if(pstmt != null) 
+			{
+				try {pstmt.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(conn != null) 
+			{
+				try {conn.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+		}	
 	}
 
 	public void deleteBook(String bookId)
 	{
 		System.out.println("delBook start");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		try 
 		{
 			//db conn
-			Connection conn = dbconn();
+			conn = dbconn();
 			
-			PreparedStatement pstmt = null;
 			//가져올결과없다 - rs안만듦
 			String sql = "delete from book where b_id=?";
 			pstmt = conn.prepareStatement(sql);
@@ -266,6 +337,19 @@ public class bookRepository
 		{
 			e.printStackTrace();
 			System.out.println("delbook error");
+		}
+		finally
+		{
+			if(pstmt != null) 
+			{
+				try {pstmt.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
+			if(conn != null) 
+			{
+				try {conn.close();} 
+				catch (SQLException e) {e.printStackTrace();}
+			}
 		}
 	}
 }

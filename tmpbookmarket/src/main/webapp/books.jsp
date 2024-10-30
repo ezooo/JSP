@@ -46,9 +46,9 @@
 					<img src="./resource/images/<%=book.getFilename()%>" style="width:250px; height:350px" />
 					<h5><b> <%=book.getName()%></b></h5>
 					<p> <%=book.getAuthor()%></p>
-					<br> <%=book.getPublisher()%> | <%=book.getUnitPrice()%>원
+					<br> <%=book.getPublisher()%> | <%=book.getReleaseDate()%>
 					<p> <%= book.getDescription() %></p>
-					<p> <%=book.getReleaseDate()%> </p>
+					<p> <%=book.getUnitPrice()%>원 </p>
 					<p> <%=book.getCategory()%> | <%=book.getCondition()%> </p>
 					<p> <a href="book?id=<%= book.getBookId() %>" class="btn btn-secondary" role="button">상세 정보 &raquo;</a> </p>
 				</div>

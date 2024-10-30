@@ -21,6 +21,7 @@ public class movebook extends HttpServlet
 		bookRepository br = bookRepository.getRepository();
 		req.setAttribute("br", br);
 		
+		
 		RequestDispatcher ds = req.getRequestDispatcher("book.jsp");
 		ds.forward(req, resp);	
 	}

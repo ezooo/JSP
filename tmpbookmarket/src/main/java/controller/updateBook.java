@@ -25,6 +25,7 @@ public class updateBook extends HttpServlet
 		String bookid = req.getParameter("id");
 		//이 아이디에 해당하는 페이지만 셀렉해서 가져와야 함
 		bookRepository br = bookRepository.getRepository();
+		
 		//br.getBookById(bookid);
 		//dto 리턴받으면 가져가서 뷰에 뿌려줘야 함 --> req에 담기
 		req.setAttribute("dto", br.getBookById(bookid));
@@ -62,7 +63,7 @@ public class updateBook extends HttpServlet
 		String unitsInStock = multi.getParameter("unitsInStock");
 		String condition = multi.getParameter("condition");
 		
-		String fileName = multi.getFilesystemName("bookImage"); //addBook에서 넘겨준 변수명(name)
+		String fileName = multi.getFilesystemName("bookImage"); //updateBook 폼에서 넘겨준 변수명(name)
 		System.out.println("파일명 : "+fileName);
 		
 		Integer price;	//숫자여야 하는거 숫자로 바꿔주는것 

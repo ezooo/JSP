@@ -41,6 +41,7 @@ public class addBook extends HttpServlet
 		String encType = "utf-8";
 		
 		MultipartRequest multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		//이거 하는 이유 : 일반텍스트와 이미지 섞여있으므로 분리 가능한 객체가 필요
 		
 		String bookId = multi.getParameter("bookId");  //객체 전부 multi로 변경	//다 전처리 작업
 		System.out.println(bookId);

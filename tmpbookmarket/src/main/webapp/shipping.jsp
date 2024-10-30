@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>배송 정보</title>
-<link rel="stylesheet" href="./resource/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="/tmpbookmarket/resource/css/bootstrap.min.css"></link>
 </head>
 <body>
 	<div class="container py-4">

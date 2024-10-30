@@ -32,7 +32,7 @@ public class addBook extends HttpServlet
 		req.setCharacterEncoding("utf-8"); //나중에 파라미터에 실어보낼 때 텍스트 안 깨지도록 감싸는 것
 		
 		//String filename = ""; //파일네임 변수 생성
-		String realFolder = req.getServletContext().getRealPath("/resource/images");
+		String realFolder = req.getServletContext().getRealPath("/resources/images");
 		System.out.println("폴더명 : "+realFolder); //프로젝트폴더까지 반환해주는 것 확인
 		
 		//String realFolder = path+"/resource/images";
@@ -41,6 +41,7 @@ public class addBook extends HttpServlet
 		String encType = "utf-8";
 		
 		MultipartRequest multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		//이거 하는 이유 : 일반텍스트와 이미지 섞여있으므로 분리 가능한 객체가 필요
 		
 		String bookId = multi.getParameter("bookId");  //객체 전부 multi로 변경	//다 전처리 작업
 		System.out.println(bookId);
@@ -53,9 +54,6 @@ public class addBook extends HttpServlet
 		String category = multi.getParameter("category");
 		String unitsInStock = multi.getParameter("unitsInStock");
 		String condition = multi.getParameter("condition");
-		
-		String fileName = multi.getFilesystemName("bookImage"); //addBook에서 넘겨준 변수명(name)
-		System.out.println("파일명 : "+fileName);
 		
 		Integer price;	//숫자여야 하는거 숫자로 바꿔주는것 
 		if(unitPrice.isEmpty())
@@ -76,7 +74,9 @@ public class addBook extends HttpServlet
 		{
 			stock=Long.valueOf(unitsInStock);
 		}
-		
+		//저장된 이미지의 이름을 변수에 저장하는 것 : 이미지처리X 처리는 multi가 자동으로 해주는 것
+		String fileName = multi.getFilesystemName("bookImage"); //addBook에서 넘겨준 변수명(name)
+		System.out.println("파일명 : "+fileName);
 		
 		//묶음처리
 		Book newBook = new Book();
@@ -96,7 +96,7 @@ public class addBook extends HttpServlet
 		bookRepository dao = bookRepository.getRepository();
 		dao.addBook(newBook);
 		
-		response.sendRedirect("products");	//처음 컨트롤러로 연결
+		response.sendRedirect("books");	//처음 컨트롤러로 연결
 		//sendRedirect 는 컨트롤러에서 나갔다가 다시 컨트롤러로 돌아옴
 	}
 }
