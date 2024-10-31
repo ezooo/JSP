@@ -1,5 +1,21 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="dto.Member" %>
+<%@ page session="false"%>
 <!DOCTYPE html>
+<%
+	HttpSession session2 = null;
+	session2 = request.getSession(false);
+	String sessionId = null;
+	if(session2 != null)	//menu는 첫 화면부터 다 들어가 있어서 이거 검사해줘야 함
+	{
+		System.out.println("menu 세션있음");
+		Member mb = (Member)session2.getAttribute("member");
+		if(mb != null)
+		{
+			sessionId = mb.getName();			
+		}
+	}
+%>
 <header class="pb-3 mb-4 border-bottom">
 <div class="container">
 	<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -11,6 +27,16 @@
 	        <span class="fs-4">Home</span>
 		</a>  
 		<ul class="nav nav-pills">
+     		<% if(sessionId==null){ %>
+				<li class="nav-item"><a class="nav-link" href="member_login">로그인 </a></li>
+				<li class="nav-item"><a class="nav-link" href="member_add">회원가입</a></li>
+			<% }
+     			else{ %>
+				<li style="padding-top: 7px">[<%=sessionId%>님]</li>
+				<li class="nav-item"><a class="nav-link" href="member_logout">로그아웃 </a></li>
+				<li class="nav-item"><a class="nav-link" href="member_update">회원수정</a></li>
+			<% } %>
+			
 			<!-- R : 전체상품 가져오기 -->
 		   	<li class="nav-item"><a href="books" class="nav-link text-dark">도서 목록 보기</a></li>
 		   	<!-- C : 상품 입력 -->
@@ -19,6 +45,7 @@
 		   	<li class="nav-item"><a href="edit?edit=update" class="nav-link text-dark">도서 수정</a></li>
 		   	<!-- D : 상품 삭제 -->
 		   	<li class="nav-item"><a href="edit?edit=delete" class="nav-link text-dark">도서 삭제</a></li>
+		   	<li class ="nav-item"><a href = "BoardListAction?pageNum=1" class = "nav-link">게시판</a></li>
 		   	
 		   	 
 		   	<!-- href 주소에 슬래쉬(/)를 붙이면 '절대경로로 경로를 표시하겠다'는 것 -->
