@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>forward_date.jsp</title>
 </head>
 <body>
 	<p>오늘의 날짜 및 시간</p>

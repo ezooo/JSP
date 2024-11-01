@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page session="false"%>
 <html>
 <head>
 <link rel="stylesheet" href="/bookmarket_CRUD/resources/css/bootstrap.min.css" />

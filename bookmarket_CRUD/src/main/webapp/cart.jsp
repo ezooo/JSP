@@ -2,12 +2,14 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Book" %>
 <%@ page import="dao.bookRepository" %>
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/bookmarket_CRUD/resources/css/bootstrap.min.css"></link>
 <%
+	HttpSession session = request.getSession(false);	
 	String cartId = session.getId();
 %>
 <title>장바구니</title>

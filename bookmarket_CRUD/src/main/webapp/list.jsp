@@ -5,7 +5,7 @@
 <%@ page import="dto.Member"%>
 <%@ page session="false"%>
 <%
-	int pageNum = ((Integer) request.getAttribute("pageNum")).intValue();
+	int pageNum = (Integer) request.getAttribute("pageNum");
 	int total_record = ((Integer) request.getAttribute("total_record")).intValue();
 	int total_page = ((Integer) request.getAttribute("total_page")).intValue();
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");	
@@ -76,7 +76,7 @@
 					<tr>
 						<td><%=notice.getNum()%></td>
 						<td>
-							<a href="BoardViewAction?num=<%=notice.getNum()%>&pageNum=<%=pageNum%>"><%=notice.getSubject()%></a>
+							<a href="readone?num=<%=notice.getNum()%>&pageNum=<%=pageNum%>"><%=notice.getSubject()%></a>
 						</td>
 						<td><%=notice.getRegist_day()%></td>
 						<td><%=notice.getHit()%></td>
@@ -89,21 +89,21 @@
 			</div>
 			<div align="center">
 				<%
-					for(int i=1; i<total_page; i++)
+					for(int i=1; i<=total_page; i++)
 					{
 				%>
-					<a href="BoardListAction?pageNum=${i}">
+					<a href="BoardListAction?pageNum=<%=i %>">
 					<%
 						if(pageNum == i)
 						{
 					%>
-						<font color='4C5317'><b> [${i}]</b></font>
+						<font color='4C5317;'><b>[<%=i %>]</b></font>
 					<%
 						}
 						else
 						{
 					%>
-						<font color='4C5317'> [${i}]</font>
+						<font color='4C5317;'><%=i %></font>
 					<%
 						}
 					%>

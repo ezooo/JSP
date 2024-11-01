@@ -1,8 +1,18 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page session="false" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ page import="dto.Member" %>
 <%
-	//String name = (String) request.getAttribute("name");
-	
+	HttpSession session = request.getSession(false);
+	//리퀘스트랑 세션은 반드시 유효성검사를 거칠 것
+	if(session == null)
+	{
+		System.out.println("writeForm.jsp : 세션 없음");
+	}
+	Member mb = (Member)session.getAttribute("member");
+	String name = (String)mb.getName();
+	System.out.println(name);
 %>
 <html>
 <head>
@@ -27,7 +37,7 @@
 </script>
 <body>
 <div class="container py-4">
-	<jsp:include page="./menu.jsp" />
+	<jsp:include page="menu.jsp" />
 	
 	 <div class="p-5 mb-4 bg-body-tertiary rounded-3">
       <div class="container-fluid py-5">
@@ -38,13 +48,13 @@
 
 	<div class="row align-items-md-stretch   text-center">	 	
 
-		<form name="newWrite" action="BoardWriteAction"  method="post" onsubmit="return checkForm()">
+		<form name="newWrite" action="BoardWriteForm"  method="post" onsubmit="return checkForm()">
 			<input name="id" type="hidden" class="form-control"
 				value="${sessionId}">
 			<div class="mb-3 row">
 				<label class="col-sm-2 control-label" >성명</label>
 				<div class="col-sm-3">
-					<input name="name" type="text" class="form-control" value="name" placeholder="name">
+					<input name="name" type="text" class="form-control" value="<%=name %>" placeholder="name">
 				</div>
 			</div>
 			<div class="mb-3 row">
@@ -73,6 +83,4 @@
 	</div>
 </body>
 </html>
-
-
 

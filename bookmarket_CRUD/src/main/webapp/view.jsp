@@ -1,34 +1,31 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%@ page import="mvc.model.BoardDTO"%>
+<%@ page import="dto.Board"%>
+<%@ page session="false"%>
 
 <%
-	BoardDTO notice = (BoardDTO) request.getAttribute("board");
-	int num = ((Integer) request.getAttribute("num")).intValue();
-	int nowpage = ((Integer) request.getAttribute("page")).intValue();
+	Board notice = (Board)request.getAttribute("board");
+	//int num = ((Integer) request.getAttribute("num")).intValue();
+	//int nowpage = ((Integer) request.getAttribute("page")).intValue();
 %>
 <html>
 <head>
-<link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/bookmarket_CRUD/resources/css/bootstrap.min.css" />
 <title>Board</title>
 </head>
 <body>
 
 <div class="container py-4">
-	<jsp:include page="../menu.jsp" />
+	<jsp:include page="menu.jsp" />
 	
-	 <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+	<div class="p-5 mb-4 bg-body-tertiary rounded-3">
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">게시판</h1>
         <p class="col-md-8 fs-4">Board</p>      
       </div>
     </div>
-
-
-
 		<div class="row align-items-md-stretch   text-center">	 
-		<form name="newUpdate" action="BoardUpdateAction.do?num=<%=notice.getNum()%>&pageNum=<%=nowpage%>"  method="post">
+		<form name="newUpdate" action="BoardUpdateAction.do?num=<%=notice.getNum()%>&pageNum=1"  method="post">
 				<div class="mb-3 row">
 				<label class="col-sm-2 control-label" >성명</label>
 				<div class="col-sm-3">
@@ -52,16 +49,16 @@
 					<c:set var="userId" value="<%=notice.getId()%>" />
 					<c:if test="${sessionId==userId}">
 						<p>
-							<a	href="./BoardDeleteAction.do?num=<%=notice.getNum()%>&pageNum=<%=nowpage%>"	class="btn btn-danger"> 삭제</a> 
+							<a	href="./BoardDeleteAction.do?num=<%=notice.getNum()%>&pageNum=1"	class="btn btn-danger"> 삭제</a> 
 							<input type="submit" class="btn btn-success" value="수정 ">
 					</c:if>
-					<a href="./BoardListAction.do?pageNum=<%=nowpage%>"		class="btn btn-primary"> 목록</a>
+					<a href="BoardListAction?pageNum=1"	class="btn btn-primary"> 목록</a>
 				</div>
 			</div>
 		</form>
 	
 	</div>
-	<jsp:include page="../footer.jsp" />
+	<jsp:include page="footer.jsp" />
 	</div>
 </body>
 </html>

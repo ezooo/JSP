@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="dto.Member" %>
+<%@ page session="false" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
 <html>
 <head>
 <link rel="stylesheet" href="/bookmarket_CRUD/resources/css/bootstrap.min.css" />
@@ -13,7 +15,9 @@
  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
       <div class="container-fluid py-5">
       <%
-			String msg = request.getParameter("msg");
+      		String msg = null;
+      		HttpSession session = null;
+			msg = request.getParameter("msg");
       		if (msg.equals("0")||msg.equals("2")){
       %>
         <h1 class="display-5 fw-bold">회원 정보</h1>

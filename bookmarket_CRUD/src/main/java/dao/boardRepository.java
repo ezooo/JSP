@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import dto.Board;
 
 public class boardRepository 
@@ -21,6 +23,7 @@ public class boardRepository
 	Connection conn =null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	ArrayList<Board> arrb = null;
 	
 	//데이터베이스 연결 함수
 	public Connection dbconn()	//커넥션 객체 리턴할 것
@@ -91,8 +94,39 @@ public class boardRepository
 	//c
 	public void create(Board bd)
 	{
-		
+		System.out.println("board create() in");
+		conn = dbconn();
+		//보드 내용 꺼내기
+		String name = bd.getName();
+		String subject = bd.getSubject();
+		String content = bd.getContent();
+		String id = bd.getId();
+		java.sql.Timestamp timestamp = bd.getRegist_day();
+		int hit = 0;	//아직 조회안됨
+		String ip = bd.getIp();
+
+		String sql = "insert into board(id, name, subject, content, regist_day, hit, ip) values(?,?,?,?,?,?,?)";
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, subject);
+			pstmt.setString(4, content);
+			pstmt.setTimestamp(5, timestamp);
+			pstmt.setInt(6, hit);
+			pstmt.setString(7, ip);
+			
+			pstmt.executeUpdate();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			System.out.println("board create() error");
+		}
+		System.out.println("board create() 완료");
 	}
+	
 	//r all
 	public ArrayList<Board> getAllBoard()
 	{
@@ -147,9 +181,37 @@ public class boardRepository
 	
 
 	//r one
-	public Board getOneBoard()
+	public Board getOneBoard(String num)
 	{
+		System.out.println("getOneBoard in");
 		Board bd = null;
+		//db연결
+		conn = dbconn();
+		//쿼리작성
+		String sql = "select * from board where num=?";
+		try 
+		{
+			System.out.println("getOneBoard try in");
+			pstmt = conn.prepareStatement(sql);
+			//받아올 dto가 있다 : resultset
+			pstmt.setString(1, num);
+			rs = pstmt.executeQuery();
+			//rs 내용꺼내서 dto담기
+			if(rs.next())
+			{
+				System.out.println("getOneBoard rs 내용꺼내기");
+				bd = new Board();
+				bd.setName(rs.getString("name"));
+				bd.setSubject(rs.getString("subject"));
+				bd.setContent(rs.getString("content"));
+				System.out.println("getOneBoard rs 내용 삽입완료");
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			System.out.println("getOneBoard try error");
+		}		
 		return bd;
 	}
 	//u

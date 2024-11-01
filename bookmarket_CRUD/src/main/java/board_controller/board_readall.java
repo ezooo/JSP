@@ -25,7 +25,12 @@ public class board_readall extends HttpServlet
 		
 		int limit = 5;	//한 페이지에 출력할 글의 갯수를 제한
 		//전처리
-		int pagenum = Integer.parseInt(req.getParameter("pageNum"));
+		String page = req.getParameter("pageNum");
+		int pageNum = 1;
+		if(page != null)
+		{
+			pageNum = Integer.parseInt(page);			
+		}
 		//모델이동
 		boardRepository br = boardRepository.getInstance();
 		ArrayList<Board> arr = br.getAllBoard();
@@ -43,7 +48,7 @@ public class board_readall extends HttpServlet
 		}
 		//뷰이동
 		req.setAttribute("list", arr);	//전체 글을 담은 객체
-		req.setAttribute("pageNum", pagenum);	//현재 페이지 번호
+		req.setAttribute("pageNum", pageNum);	//현재 페이지 번호
 		req.setAttribute("total_record", total_record);	//전체 글의 갯수
 		req.setAttribute("total_page", total_page);	//출력할 페이지의 갯수
 		
@@ -93,6 +98,6 @@ public class board_readall extends HttpServlet
 		mr.create(mb);
 		
 		//뷰이동
-		resp.sendRedirect("/bookmarket_CRUD");
+		resp.sendRedirect("/BoardListAction?pageNum=1");
 	}
 }

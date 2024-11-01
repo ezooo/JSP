@@ -1,6 +1,7 @@
 package board_controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,61 +26,68 @@ public class board_write extends HttpServlet
 		System.out.println("board_write get");
 		
 		HttpSession session = req.getSession(false);
-		
-		if(session == null)
+		RequestDispatcher rs=null;
+		System.out.println(session);
+		if(session == null) 
 		{
-			System.out.println("BoardWriteForm 세션이 없습니다.");
-			resp.sendRedirect("member_login");
+			rs = req.getRequestDispatcher("member_login");
 		}
-		else
+		else if(session != null)
 		{
-			RequestDispatcher ds = req.getRequestDispatcher("writeForm.jsp");
-			ds.forward(req, resp);
+			Member mb = (Member)session.getAttribute("member");
+			if(session.getAttribute("member") == null) 
+			{
+				System.out.println("세션존재 멤버 없음 이동한다");
+				rs = req.getRequestDispatcher("member_login");
+			}
+			else 
+			{
+				rs = req.getRequestDispatcher("writeForm.jsp");            
+			}
 		}
+			      
+		rs.forward(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
 		System.out.println("board_write post");
 		
 		//전처리
-		request.setCharacterEncoding("UTF-8");
-
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
-		String name = request.getParameter("name");
-		String gender = request.getParameter("gender");
-		String year = request.getParameter("birthyy");
-		String month = request.getParameterValues("birthmm")[0];
-		String day = request.getParameter("birthdd");
-		String birth = year + "/" + month + "/" + day;
-		String mail1 = request.getParameter("mail1");
-		String mail2 = request.getParameterValues("mail2")[0];
-		String mail = mail1 + "@" + mail2;
-		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
-
+		req.setCharacterEncoding("UTF-8");
+		
+		String name = req.getParameter("name");
+		String subject = req.getParameter("subject");
+		String content = req.getParameter("content");
+		//전달받은 정보는 3개
+		//채워줘야 하는건??
+		//아이디, 등록시간, 조회수, 아이피주소 : 아이디-세션에서 가져온다
+		HttpSession ssn = req.getSession(false);
+		Member mb = (Member)ssn.getAttribute("member");
+		String id = mb.getId();
+			//시간구하는게 좀 귀찮은...형태
 		Date currentDatetime = new Date(System.currentTimeMillis());
 		java.sql.Date sqlDate = new java.sql.Date(currentDatetime.getTime());
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(currentDatetime.getTime());
-		//셋 다 현재 시간
-		Member mb = new Member();
-		mb.setId(id);
-		mb.setPassword(password);
-		mb.setName(name);
-		mb.setGender(gender);
-		mb.setBirth(birth);
-		mb.setMail(mail);
-		mb.setPhone(phone);
-		mb.setAddress(address);
-		mb.setRegist_day(timestamp);
-		//시간은 타임스탬프쓰기 -- db에 varchar 돼있어도 알아서 형식잡아서 넣어준다고 함
+		
+		int hit = 0;	//아직 조회안됨
+		String ip = req.getRemoteAddr();
+		
+		Board bd = new Board();
+		bd.setName(name);
+		bd.setSubject(subject);
+		bd.setContent(content);
+		bd.setId(id);
+		bd.setRegist_day(timestamp);
+		bd.setHit(hit);
+		bd.setIp(ip);
+		
 		//모델이동
-		memberRepository mr = memberRepository.getMr();
-		mr.create(mb);
+		boardRepository br = boardRepository.getInstance();
+		br.create(bd);
 		
 		//뷰이동
-		resp.sendRedirect("/bookmarket_CRUD");
+		resp.sendRedirect("BoardListAction");
 	}
 }

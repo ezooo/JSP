@@ -3,9 +3,7 @@
 <%@ page import="dto.Book" %>
 <%@ page import="dao.bookRepository" %>
 <%@ page errorPage="exceptionNoBookId.jsp" %>
-<!-- 객체 생성 할 필요없다 컨트롤러가 해줌
-<jsp:useBean id="bookDAO" class="dao.bookRepository" scope="session"></jsp:useBean>
- -->
+<%@ page session="false"%>
     
 <!DOCTYPE html>
 <html>
