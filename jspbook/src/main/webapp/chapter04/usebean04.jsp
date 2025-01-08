@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>usebean04.jsp</title>
 </head>
 <body>
 	<jsp:useBean id="person" class="chapter04.person" scope="request"></jsp:useBean>
